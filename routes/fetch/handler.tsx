@@ -1,13 +1,14 @@
 import { Handler } from "$fresh/server.ts";
-import { got } from "got";
 
-export async function getGotResp() {
-  return await got("https://catfact.ninja/fact").json<Record<string, string>>();
+export async function getFetchResp() {
+  const resp = await fetch("https://catfact.ninja/fact");
+  const json = await resp.json();
+  return json;
 }
 
 export const handler: Handler = async () => {
-  console.log("got handler");
-  const resp = await getGotResp();
+  console.log("fetch handler");
+  const resp = await getFetchResp();
   return new Response(JSON.stringify(resp), {
     headers: {
       "content-type": "application/json;charset=UTF-8",
